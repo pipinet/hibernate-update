@@ -1,0 +1,90 @@
+quarkus:
+  devservices:
+    enabled: true
+  datasource:
+    devservices:
+      enabled: true
+      db-name: hibernate
+      port: 54321
+    db-kind: postgresql
+    username: postgres
+    password:
+    metrics:
+      enabled: true
+    jdbc:
+#      url: jdbc:postgresql://localhost:54321/hibernate
+      transactions: enabled
+      statement-timeout: 30000000
+      enable-metrics: true
+      pooling-enabled: true
+      flush-on-close: true
+      transaction-isolation-level: repeatable-read
+      max-size: 200
+      min-size: 10
+      initial-size: 10
+      background-validation-interval: 2M
+      acquisition-timeout: 0
+      idle-removal-interval: 5M
+  flyway:
+    connect-retries: 100
+    clean-on-validation-error: false
+    migrate-at-start: true
+    validate-on-migrate: true
+    ignore-missing-migrations: true
+    locations: classpath:db/migration
+    schemas: public
+    table: flyway_history
+  hibernate-orm:
+    active: true
+    database:
+      generation: none
+      charset: UTF-8
+    validate-in-dev-mode: false
+#    physical-naming-strategy: com.qwlabs.jpa.naming.GeneralPhysicalNamingStrategy
+#    implicit-naming-strategy: com.qwlabs.jpa.naming.GeneralImplicitNamingStrategy
+    second-level-caching-enabled: false
+    dialect: org.hibernate.dialect.PostgresPlusDialect
+    mapping:
+      timezone:
+        default-storage: auto
+    fetch:
+      batch-size: 1024
+      max-depth: 3
+    log:
+      sql: true
+      bind-parameters: false
+      jdbc-warnings: true
+    jdbc:
+      statement-fetch-size: 1024
+      statement-batch-size: 1024
+      timezone: UTC
+    queries-slower-than-ms: 1000
+    query:
+      query-plan-cache-max-size: 2048
+      in-clause-parameter-padding: true
+  smallrye-graphql:
+    root-path: graphql
+    http:
+      get:
+        enabled: true
+    events:
+      enabled: true
+    validation:
+      enabled: true
+    schema-available: true
+    schema-include-scalars: true
+    schema-include-schema-definition: true
+    schema-include-directives: true
+    schema-include-introspection-types: true
+    nonblocking:
+      enabled: true
+    metrics:
+      enabled: true
+    tracing:
+      enabled: true
+    ui:
+      enable: true
+      always-include: true
+      root-path: graphql-ui
+    default-error-message: Server Error
+    print-data-fetcher-exception: true
